@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="DXSample25.MapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:map="clr-namespace:DXSample25.Map"
+             xmlns:local="clr-namespace:DXSample25"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance local:MapViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <map:MapZoomLevelConverter x:Key="ZoomLevelConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <dxg:GridControl Grid.Row="0" 
+                             ItemsSource="{Binding Locations}" />
+            <dxg:GridControl Grid.Row="1" 
+                             ItemsSource="{Binding Locations}" />
+            <dxg:GridControl Grid.Row="2" 
+                             ItemsSource="{Binding Locations}" />
+        </Grid>
+        <GridSplitter Grid.Column="0"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Right"
+                      Width="3" />
+        <map:MyMapControl Grid.Column="1" 
+                          FocusCommand="{Binding FocusCommand}"
+                          ZoomLevel="{Binding ZoomLevel,
+                                              Converter={StaticResource ZoomLevelConverter},
+                                              Mode=TwoWay, 
+                                              UpdateSourceTrigger=PropertyChanged}"
+                          Loaded="Map_OnLoaded">
+            <map:PerimeterLayer FocusCommand="{Binding CenterCommand}"
+                                RadiusInKm="{Binding PerimeterRadiusInKilometer}"
+                                ToolTipEnabled="False"/>
+            <map:LocationPinLayer x:Name="PinLayer"
+                                  DataSource="{Binding Locations}"
+                                  FocusCommand="{Binding CenterCommand}"
+                                  ToolTipEnabled="False" />
+        </map:MyMapControl>
+    </Grid>
+</UserControl>

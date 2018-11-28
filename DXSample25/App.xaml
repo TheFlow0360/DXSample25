@@ -1,0 +1,227 @@
+﻿<Application x:Class="DXSample25.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+             xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+             xmlns:map="clr-namespace:DXSample25.Map"
+             xmlns:themes="http://schemas.devexpress.com/winfx/2008/xaml/map/themekeys"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Color x:Key="PinColor"
+           A="#FF"
+           B="227"
+           G="192"
+           R="144" />
+        <Color x:Key="PinHighlightedColor"
+           A="#FF"
+           B="248"
+           G="231"
+           R="207" />
+        <Color x:Key="PinSelectedColor"
+           A="#FF"
+           B="#48"
+           G="#19"
+           R="#AA" />
+
+        <SolidColorBrush x:Key="PinBrush"
+                     Color="{StaticResource PinColor}" />
+        <SolidColorBrush x:Key="PinHighlightedBrush"
+                     Color="{StaticResource PinHighlightedColor}" />
+        <SolidColorBrush x:Key="PinSelectedBrush"
+                     Color="{StaticResource PinSelectedColor}" />
+        <SolidColorBrush x:Key="PinSelectedTextBrush"
+                     Color="Black" />
+        <SolidColorBrush x:Key="PinTextBrush"
+                     Color="Black" />
+
+        <dxm:DXMapImages x:Key="MapImages" />
+        <dxm:VisibilityToBoolConverter x:Key="VisibilityToBoolConverter" />
+        <!--<Style TargetType="{x:Type map:MyMapControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type map:MyMapControl}">
+                        <Grid FlowDirection="LeftToRight">
+                            <Rectangle x:Name="PART_DraggingElement"
+                                   Fill="Transparent"
+                                   Stretch="Fill" />
+                            <Border Background="{TemplateBinding Background}">
+                                <ItemsControl x:Name="PART_LayersContainer">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Grid />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Border>
+                            <Canvas x:Name="PART_ContainerOfRectangleToZoomIn">
+                                <ContentPresenter x:Name="PART_RectangleToZoomIn"
+                                              ContentTemplate="{Binding Path=ZoomRegionTemplate,
+                                                                        RelativeSource={RelativeSource TemplatedParent}}"
+                                              Visibility="Collapsed" />
+                            </Canvas>
+                            <dxm:OverlayItemsControl x:Name="PART_OverlaysContainer">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <dxm:MapOverlaysPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </dxm:OverlayItemsControl>
+                            <dxm:ToolTipPanel x:Name="PART_ToolTipPanel"
+                                          Clip="{Binding Path=ToolTipInfo.Clip,
+                                                         RelativeSource={RelativeSource TemplatedParent}}"
+                                          Position="{Binding Path=ToolTipInfo.ToolTipPosition,
+                                                             RelativeSource={RelativeSource TemplatedParent}}"
+                                          Visibility="{Binding Path=ToolTipInfo.Visibility,
+                                                               RelativeSource={RelativeSource TemplatedParent}}">
+                                <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="True"
+                                   DataContext="{Binding Path=ToolTipInfo,
+                                                         RelativeSource={RelativeSource TemplatedParent}}"
+                                   IsOpen="{Binding Visibility,
+                                                    Mode=OneWay,
+                                                    Converter={StaticResource VisibilityToBoolConverter}}"
+                                   Placement="Center">
+                                    <ContentPresenter Content="{Binding Path=ToolTipInfo,
+                                                                    RelativeSource={RelativeSource TemplatedParent}}"
+                                                  ContentTemplate="{Binding Path=ToolTipTemplate,
+                                                                            RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Popup>
+                            </dxm:ToolTipPanel>
+                            <Grid x:Name="PART_InvalidKeyPanel"
+                              Width="400"
+                              MinHeight="29"
+                              Margin="2,2,0,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Visibility="Collapsed">
+                                <Border Background="#FFDD0000"
+                                    CornerRadius="5"
+                                    Opacity="0.75" />
+                                <TextBlock Margin="32"
+                                       FontSize="14.667"
+                                       Foreground="White"
+                                       Text="{Binding}"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap" />
+                            </Grid>
+                            <dxm:MapSearchPanel x:Name="PART_SearchPanel"
+                                            Margin="20"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+        <Style TargetType="dxm:PushpinMarkerControl">
+            <Setter Property="Item" Value="{Binding MapItem}" />
+            <Setter Property="State" Value="{Binding MapItem.State}" />
+            <Setter Property="IsHighlighted" Value="{Binding MapItem.IsHighlighted}" />
+            <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="dxm:PushpinMarkerControl">
+                        <Grid x:Name="ContainerGrid"
+                          Width="64"
+                          Height="64"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform X="-32" Y="-52" />
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Image Margin="0,0,0,5"
+                               VerticalAlignment="Bottom"
+                               IsHitTestVisible="False"
+                               Opacity="0.5"
+                               Source="{Binding PushpinPointerShadow,
+                                                Source={StaticResource ResourceKey=MapImages}}"
+                               Stretch="None" />
+                            <Grid Width="36"
+                              Height="44"
+                              Background="Transparent">
+                                <Path x:Name="Edge"
+                                  Margin="0,0,0,-0.001"
+                                  Data="F1 M 55,34C 64.9411,34 73,42.0589 73,52C 73,56.8348 71.0938,61.2245 67.992,64.4583L 55.3825,78L 54.6179,78L 42.2447,64.7005C 39.0034,61.4453 37,56.9566 37,52C 37,42.0589 45.0589,34 55,34 Z M 55,40C 48.3726,40 43,45.3726 43,52C 43,58.6275 48.3726,64 55,64C 61.6274,64 67,58.6275 67,52C 67,45.3726 61.6274,40 55,40 Z M 55,42C 60.5228,42 65,46.4772 65,52C 65,57.5229 60.5228,62 55,62C 49.4771,62 45,57.5229 45,52C 45,46.4772 49.4771,42 55,42 Z "
+                                  Fill="#59000000"
+                                  Stretch="Fill"
+                                  UseLayoutRounding="False" />
+                                <Path Margin="0.999"
+                                  Data="F1 M 55,43C 59.9706,43 64,47.0294 64,52C 64,56.9706 59.9706,61 55,61C 50.0294,61 46,56.9706 46,52C 46,47.0294 50.0294,43 55,43 Z M 55,35C 64.3888,35 72,42.6112 72,52C 72,56.195 70.4805,60.0351 67.962,63L 55,77L 42.038,63C 39.5194,60.0351 38,56.195 38,52C 38,42.6112 45.6111,35 55,35 Z M 55,39C 47.8203,39 42,44.8203 42,52C 42,59.1797 47.8203,65 55,65C 62.1797,65 68,59.1797 68,52C 68,44.8203 62.1797,39 55,39 Z"
+                                  Fill="{StaticResource PinBrush}"
+                                  Stretch="Fill"
+                                  UseLayoutRounding="False" />
+                                <Path x:Name="HighlightedMarker"
+                                  Margin="0.999"
+                                  Data="F1 M 55,43C 59.9706,43 64,47.0294 64,52C 64,56.9706 59.9706,61 55,61C 50.0294,61 46,56.9706 46,52C 46,47.0294 50.0294,43 55,43 Z M 55,35C 64.3888,35 72,42.6112 72,52C 72,56.195 70.4805,60.0351 67.962,63L 55,77L 42.038,63C 39.5194,60.0351 38,56.195 38,52C 38,42.6112 45.6111,35 55,35 Z M 55,39C 47.8203,39 42,44.8203 42,52C 42,59.1797 47.8203,65 55,65C 62.1797,65 68,59.1797 68,52C 68,44.8203 62.1797,39 55,39 Z"
+                                  Fill="{StaticResource PinHighlightedBrush}"
+                                  Stretch="Fill"
+                                  UseLayoutRounding="False" />
+                                <Path x:Name="SelectionMarker"
+                                  Margin="0.999"
+                                  Data="F1 M 55,43C 59.9706,43 64,47.0294 64,52C 64,56.9706 59.9706,61 55,61C 50.0294,61 46,56.9706 46,52C 46,47.0294 50.0294,43 55,43 Z M 55,35C 64.3888,35 72,42.6112 72,52C 72,56.195 70.4805,60.0351 67.962,63L 55,77L 42.038,63C 39.5194,60.0351 38,56.195 38,52C 38,42.6112 45.6111,35 55,35 Z M 55,39C 47.8203,39 42,44.8203 42,52C 42,59.1797 47.8203,65 55,65C 62.1797,65 68,59.1797 68,52C 68,44.8203 62.1797,39 55,39 Z"
+                                  Fill="{StaticResource PinSelectedBrush}"
+                                  Stretch="Fill"
+                                  UseLayoutRounding="False" />
+                                <TextBlock x:Name="Label"
+                                       Margin="0,0,0,10"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="13.333"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PinTextBrush}"
+                                       Opacity="0.75"
+                                       Text="{Binding MapItem.Text}"
+                                       TextWrapping="NoWrap" />
+                            </Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Selection">
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="SelectionMarker"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="NotSelected">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="SelectionMarker"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="MouseStates">
+                                    <VisualState x:Name="Highlighted">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightedMarker"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.3" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="NonHighlighted">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HighlightedMarker"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Label" Property="Foreground" Value="{StaticResource PinSelectedTextBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>
