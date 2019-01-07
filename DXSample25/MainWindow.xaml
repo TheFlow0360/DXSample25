@@ -13,6 +13,9 @@
     <DockPanel>
         <dxr:RibbonControl DockPanel.Dock="Top"
                            RibbonStyle="Office2010">
+            <dxr:RibbonControl.ApplicationMenu>
+                <dxr:BackstageViewControl></dxr:BackstageViewControl>
+            </dxr:RibbonControl.ApplicationMenu>
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Demo">
                     <dxr:RibbonPageGroup Caption="Open">
