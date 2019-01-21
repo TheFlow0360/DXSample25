@@ -11,6 +11,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <map:MapZoomLevelConverter x:Key="ZoomLevelConverter" />
+        <Style TargetType="dxg:TableView">
+            <Setter Property="AllowConditionalFormattingMenu" Value="True" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,10 +27,13 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <dxg:GridControl Grid.Row="0" 
+                             AutoGenerateColumns="AddNew"
                              ItemsSource="{Binding Locations}" />
             <dxg:GridControl Grid.Row="1" 
+                             AutoGenerateColumns="AddNew"
                              ItemsSource="{Binding Locations}" />
             <dxg:GridControl Grid.Row="2" 
+                             AutoGenerateColumns="AddNew"
                              ItemsSource="{Binding Locations}" />
         </Grid>
         <GridSplitter Grid.Column="0"
